@@ -16,14 +16,18 @@ class App extends Component {
         super(props);
 
         this.state = {
-            minutes: "",
-            hours: "",
-            days: "",
-            months: "",
-            weekdays: "",
-            command: "",
+            operatingSystem: "",
+            minutes: "*",
+            hours: "*",
+            days: "*",
+            months: "*",
+            weekdays: "*",
+            command: "echo \"Hello World!\"",
             events: "",
-            executionOutput: ""
+            email: "",
+            logfile: "",
+            executionOutput: "",
+            output: -1
         };
         this.changeMinutes = this.changeMinutes.bind(this);
         this.changeHours = this.changeHours.bind(this);
@@ -33,7 +37,16 @@ class App extends Component {
         this.changeCommand = this.changeCommand.bind(this);
         this.changeEvents = this.changeEvents.bind(this);
         this.changeExecutionOutput = this.changeExecutionOutput.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.changeOperatingSystem = this.changeOperatingSystem.bind(this);
+        this.changeExecutionLogfileOutput = this.changeExecutionLogfileOutput.bind(this);
+        this.changeExecutionEmailOutput = this.changeExecutionEmailOutput.bind(this);
+    }
+
+    changeOperatingSystem(event) {
+        this.setState({
+            operatingSystem: event
+        });
+        console.log("changeOperatingSystem ", event);
     }
 
     changeMinutes(event){
@@ -87,76 +100,94 @@ class App extends Component {
 
     changeExecutionOutput(event) {
         this.setState({
-            executionOutput: event
+            executionOutput: event,
+            output: -1
         });
         console.log("changeExecutionOutput ", event);
     }
 
-    handleClick() {
-        console.log(this.state.minutes, this.state.hours, this.state.days, this.state.months, this.state.weekdays,
-            this.state.changeCommand, this.state.changeEvents, this.state.changeExecutionOutput);
-        let output = this.state.minutes + " " + this.state.hours + " "+ this.state.days + " " + this.state.months +
-                " " + this.state.weekdays + " " + this.state.changeCommand + " " +this.state.changeEvents + " " +
-            this.state.changeExecutionOutput;
+    changeExecutionLogfileOutput(event) {
+        this.setState({
+            logfile: event,
+            output: 1
+        });
+        console.log("changeExecutionLogfileOutput ", event);
     }
 
-        render() {
+    changeExecutionEmailOutput(event) {
+        this.setState({
+            email: event,
+            output: 2
+        });
+        console.log("changeExecutionEmailOutput ", event);
+    }
+
+    render() {
     return (
     <div className="container">
         <h1>Crontab Generator</h1>
         <div className="row">
             <div className="col-sm-12">
                 <div className="col-sm-12">
-                <OperatingSystem />
+                    <OperatingSystem onChange={this.changeOperatingSystem}/>
                 </div>
             </div>
         </div>
         <div className="row">
             <div className="col-sm-12">
                 <div className="col-sm-12">
-                <Command />
+                    <Command onChange={this.changeCommand}/>
                 </div>
             </div>
         </div>
         <div className="row">
             <div className="col-sm-12">
                 <div className="col-sm-12">
-                <Events />
+                    <Events onChange={this.changeEvents}/>
                 </div>
             </div>
         </div>
         <div className="row">
             <div className="col-sm-12">
                 <div className="col-sm-4">
-                   <ExecutionOutput />
+                   <ExecutionOutput onChange={this.changeExecutionOutput} email={this.changeExecutionEmailOutput}
+                                    logfile={this.changeExecutionLogfileOutput}/>
                 </div>
                 <div className="col-sm-4">
-                    <Minutes />
+                    <Minutes minutes={this.changeMinutes} />
                 </div>
                 <div className="col-sm-4">
-                    <Hours />
+                    <Hours hours={this.changeHours} />
                 </div>
             </div>
         </div>
         <div className="row">
             <div className="col-sm-12">
                 <div className="col-sm-4">
-                    <Days />
+                    <Days days={this.changeDays} />
                 </div>
-
                     <div className="col-sm-4">
-                        <Months />
+                        <Months months={this.changeMonths} />
                     </div>
                 <div className="col-sm-4">
-                    <Weekdays />
+                    <Weekdays weekdays={this.changeWeekdays} />
                 </div>
             </div>
         </div>
         <div className="row">
-            <GeneratedOutput />
+            <GeneratedOutput minutes={this.state.minutes} hours={this.state.hours}
+                             days={this.state.days} months={this.state.months}
+                             weekdays={this.state.weekdays} command={this.state.command}
+                             events={this.state.events} email={this.state.email}
+                             logfile={this.state.logfile} executionOutput={this.state.executionOutput}
+                             output={this.state.output} />
         </div>
         <div className="row">
-            <HumanReadable />
+            <HumanReadable  minutes={this.state.minutes} hours={this.state.hours}
+                            days={this.state.days} months={this.state.months}
+                            weekdays={this.state.weekdays} command={this.state.command}
+                            events={this.state.events} email={this.state.email}
+                            logfile={this.state.logfile} executionOutput={this.state.executionOutput} />
         </div>
     </div>
     );

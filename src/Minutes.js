@@ -15,18 +15,25 @@ class Minutes extends Component {
             minutes: [],
             disabled: true,
             disableFreeInput: true
-        }
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleMultiChange = this.handleMultiChange.bind(this);
         this.enableMultipleSelection = this.enableMultipleSelection.bind(this);
         this.handleFreeChange = this.handleFreeChange.bind(this);
         this.handleFreeInputEnabled = this.handleFreeInputEnabled.bind(this);
+        this.selectionChanged = this.selectionChanged.bind(this);
     }
 
-
     handleChange(event) {
-        this.setState({month: event.target.value});
-        this.setState({disabled: true})
+        this.setState({minute: event.target.value});
+        this.setState({disableFreeInput: false})
+    }
+
+    selectionChanged(event){
+        this.setState({minute: event.target.value})
+        this.setState({disabled: true});
+        this.props.minutes(event.target.value);
+        console.log(event.target.value);
     }
 
 
@@ -39,11 +46,14 @@ class Minutes extends Component {
             }
         }
         console.log(value );
-        this.setState({ hours: value });
+        this.setState({ minutes: value });
+        this.props.minutes(event.target.value);
     }
 
     handleFreeChange(event) {
         console.log(event.target.value);
+        this.setState({singleMinute: "*/"+event.target.value});
+        this.props.minutes("*/"+event.target.value);
     }
 
     handleFreeInputEnabled(){
@@ -53,30 +63,31 @@ class Minutes extends Component {
     enableMultipleSelection(){
         this.setState( {disabled: false} )
     }
-  render() {
+
+    render() {
     return (
         <fieldset><legend>Minutes</legend>
             <div className="col-sm-7">
             <label>
-            <input type="radio" name="rminutes" value="*" defaultChecked/> Every Minute
+            <input type="radio" name="rminutes" value="*" onChange={this.selectionChanged} defaultChecked/> Every Minute
           </label>
           <label>
-            <input type="radio" name="rminutes" value="*/2"/> Even Minutes
+            <input type="radio" name="rminutes" onChange={this.selectionChanged} value="*/2"/> Even Minutes
           </label>
           <label>
-            <input type="radio" name="rminutes" value="1-59/2"/> Odd (=uneven) Minutes
+            <input type="radio" name="rminutes" onChange={this.selectionChanged} value="1-59/2"/> Odd (=uneven) Minutes
           </label>
           <label>
-            <input type="radio" name="rminutes" value="*/5"/> Every 5 Minutes
+            <input type="radio" name="rminutes" onChange={this.selectionChanged} value="*/5"/> Every 5 Minutes
           </label>
           <label>
-            <input type="radio" name="rminutes" value="*/15"/> Every 15 Minutes
+            <input type="radio" name="rminutes" onChange={this.selectionChanged} value="*/15"/> Every 15 Minutes
           </label>
           <label>
-            <input type="radio" name="rminutes" value="*/30"/> Every 30 Minutes
+            <input type="radio" name="rminutes" onChange={this.selectionChanged} value="*/30"/> Every 30 Minutes
           </label>
               <label>
-                <input type="radio" name="rminutes" /> Every <input type="number" min="1" max="59"/> Minute(s)
+                <input type="radio" name="rminutes" onChange={this.handleChange} /> Every <input type="number" min="1" max="59" disabled = {(this.state.disableFreeInput)? "disabled" : ""} onChange={this.handleFreeChange}/> Minute(s)
               </label>
             </div>
             <div className="col-sm-5">
@@ -155,66 +166,3 @@ class Minutes extends Component {
 }
 
 export default Minutes;
-class NameForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {value: ''};
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        );
-    }
-}
-
-class EssayForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: 'Please write an essay about your favorite DOM element.'
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        alert('An essay was submitted: ' + this.state.value);
-        event.preventDefault();
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Essay:
-                    <textarea value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        );
-    }
-}

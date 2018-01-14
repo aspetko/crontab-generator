@@ -20,18 +20,23 @@ class Months extends Component {
     handleChange(event) {
         this.setState({ month: event.target.value });
         this.setState( { disabled: true} )
+        this.props.months(event.target.value);
     }
 
     handleMultiChange(event) {
         var options = event.target.options;
         var value = [];
+        let sep = "";
         for (var i = 0, l = options.length; i < l; i++) {
             if (options[i].selected) {
-                value.push(options[i].value);
+                value.push(sep+options[i].value);
+                sep = ",";
             }
         }
         console.log(value );
         this.setState({ months: value });
+        this.props.months(event.target.value);
+
     }
 
     handleFreeChange(event) {
@@ -53,22 +58,22 @@ class Months extends Component {
                 <div className="col-sm-12">
                     <div className="col-sm-8">
                         <label>
-                            <input type="radio" name="rmonth" onChange={this.handleChange} defaultChecked/> Every Month
+                            <input type="radio" name="rmonth" onChange={this.handleChange} value="*" defaultChecked/> Every Month
                         </label>
                         <label>
-                            <input type="radio" name="rmonth" onChange={this.handleChange}/> Even Months
+                            <input type="radio" name="rmonth" onChange={this.handleChange} value="*/2" /> Even Months
                         </label>
                         <label>
-                            <input type="radio" name="rmonth" onChange={this.handleChange}/> Odd Months
+                            <input type="radio" name="rmonth" onChange={this.handleChange} value="1-12/2" /> Odd Months
                         </label>
                         <label>
-                            <input type="radio" name="rmonth" onChange={this.handleChange}/> Every 4 Months
+                            <input type="radio" name="rmonth" onChange={this.handleChange} value="*/4" /> Every 4 Months
                         </label>
                         <label>
-                            <input type="radio" name="rmonth" onChange={this.handleChange}/> Every Half Year
+                            <input type="radio" name="rmonth" onChange={this.handleChange} value="*/6" /> Every Half Year
                         </label>
                         <label>
-                            <input type="radio" name="rmonth" onChange={this.handleFreeInputEnabled}/> Every <input type="number" min="1" max="12" step="1" onChange={this.handleFreeChange} disabled = {(this.state.disableFreeInput)? "disabled" : ""}/> Month(s)
+                            <input type="radio" name="rmonth" onChange={this.handleFreeInputEnabled} /> Every <input type="number" min="1" max="12" step="1" onChange={this.handleFreeChange} disabled = {(this.state.disableFreeInput)? "disabled" : ""}/> Month(s)
                         </label>
                     </div>
                     <div className="col-sm-4">

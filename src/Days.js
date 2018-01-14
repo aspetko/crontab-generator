@@ -10,7 +10,7 @@ class Days extends Component {
             days: [],
             disabled: true,
             disableFreeInput: true
-        }
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleMultiChange = this.handleMultiChange.bind(this);
         this.enableMultipleSelection = this.enableMultipleSelection.bind(this);
@@ -18,12 +18,12 @@ class Days extends Component {
         this.handleFreeInputEnabled = this.handleFreeInputEnabled.bind(this);
     }
 
-
     handleChange(event) {
         this.setState({month: event.target.value});
         this.setState({disabled: true})
+        this.props.days(event.target.value);
+        console.log(event.target.value );
     }
-
 
     handleMultiChange(event) {
         var options = event.target.options;
@@ -56,22 +56,22 @@ class Days extends Component {
                 <div className="col-sm-12">
                     <div className="col-sm-7">
                         <label>
-                            <input type="radio" name="rdays" defaultChecked/> Every Day
+                            <input type="radio" name="rdays" onChange={this.handleChange}  value="*"  defaultChecked/> Every Day
                         </label>
                         <label>
-                            <input type="radio" name="rdays"/> Even Days
+                            <input type="radio" name="rdays" onChange={this.handleChange} value="*/2"  /> Even Days
                         </label>
                         <label>
-                            <input type="radio" name="rdays"/> Odd Days
+                            <input type="radio" name="rdays" onChange={this.handleChange} value="1-31/2" /> Odd Days
                         </label>
                         <label>
-                            <input type="radio" name="rdays"/> Every 5 Days
+                            <input type="radio" name="rdays" onChange={this.handleChange} value="*/5" /> Every 5 Days
                         </label>
                         <label>
-                            <input type="radio" name="rdays"/> Every 10 Days
+                            <input type="radio" name="rdays" onChange={this.handleChange} value="*/15" /> Every 10 Days
                         </label>
                         <label>
-                            <input type="radio" name="rdays"/> Every Half Month
+                            <input type="radio" name="rdays" onChange={this.handleChange} value="*/14" /> Every two Weeks
                         </label>
                     </div>
                     <div className="col-sm-5">
@@ -93,6 +93,25 @@ class Days extends Component {
                                 <option>10</option>
                                 <option>11</option>
                                 <option>12</option>
+                                <option>13</option>
+                                <option>14</option>
+                                <option>15</option>
+                                <option>16</option>
+                                <option>17</option>
+                                <option>18</option>
+                                <option>19</option>
+                                <option>20</option>
+                                <option>21</option>
+                                <option>22</option>
+                                <option>23</option>
+                                <option>24</option>
+                                <option>25</option>
+                                <option>26</option>
+                                <option>27</option>
+                                <option>28</option>
+                                <option>29</option>
+                                <option>30</option>
+                                <option>31</option>
                             </select>
                         </label>
                     </div>
