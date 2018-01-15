@@ -9,14 +9,63 @@ class GeneratedOutput extends Component {
             days: "*",
             months: "*",
             weekdays: "*",
-            command: "*",
+            command: "Command to Execute!",
             events: "*",
             email: "*",
             logfile: "*",
+            copied: false,
             executionOutput: "*"
         };
+        this.copyToClipboard = this.copyToClipboard.bind(this);
     }
-  render() {
+
+    copyToClipboard(){
+        this.setState({copied: true});
+        let clipboardText = "";
+        // preparing output
+        switch(this.props.output){
+            case "2":
+                clipboardText = this.props.email+"\n";
+                break;
+            default:
+            // nothing to do!
+        }
+        let seperator = "";
+        if (this.props.minutes !== undefined){
+            clipboardText += seperator + this.props.minutes;
+        } else {
+            clipboardText += seperator + "*";
+        }
+        seperator = " ";
+        if (this.props.hours !== undefined){
+            clipboardText += seperator + this.props.hours;
+        } else {
+            clipboardText += seperator + "*";
+        }
+        if (this.props.days !== undefined){
+            clipboardText += seperator + this.props.days;
+        } else {
+            clipboardText += seperator + "*";
+        }
+        if (this.props.months !== undefined){
+            clipboardText += seperator + this.props.months;
+        } else {
+            clipboardText += seperator + "*";
+        }
+        if (this.props.weekdays !== undefined){
+            clipboardText += seperator + this.props.weekdays;
+        } else {
+            clipboardText += seperator + "*";
+        }
+        if (this.props.command !== undefined){
+            clipboardText += seperator + this.props.command;
+        } else {
+            clipboardText += seperator + "Specify a useful command to execute!";
+        }
+        return clipboardText;
+    }
+
+    render() {
       let minutes = "*";
       if (this.props.minutes !== undefined){
           minutes = this.props.minutes;
@@ -54,7 +103,6 @@ class GeneratedOutput extends Component {
           changeCommand = "?";
       }
       let changeExecutionOutput = "";
-      console.log(this.props.output);
       switch(this.props.output){
           case "1":
               console.log("logfile");
@@ -65,12 +113,15 @@ class GeneratedOutput extends Component {
               console.log("email");
               break;
           case "-1":
-              changeExecutionOutput = this.props.executionOutput;
+              changeExecutionOutput = "2>&1";
               console.log("mute");
               break;
+          default:
+              console.error("There is no spoon!");
       }
       return (
-          <fieldset><legend>GeneratedOutput</legend>
+          <fieldset>
+              <legend>GeneratedOutput</legend>
               <div className="col-sm-12">
                   <div className="col-sm-1">
                       <fieldset><legend>Minutes</legend>
@@ -102,10 +153,17 @@ class GeneratedOutput extends Component {
                           <div>{changeCommand}</div>
                       </fieldset>
                   </div>
-                  <div className="col-sm-2">
+                  <div className="col-sm-1">
                       <fieldset><legend>Output</legend>
                           <div>{changeExecutionOutput}</div>
                       </fieldset>
+                  </div>
+                  <div className="col-sm-1">
+                      <Clipboard option-text={this.copyToClipboard} button-title="Copy to Clipboard">
+                          Copy
+                      </Clipboard>
+
+                      {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
                   </div>
               </div>
           </fieldset>

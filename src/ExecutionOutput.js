@@ -20,19 +20,19 @@ class Output extends Component {
     selectionChangedEmail(){
         this.setState( {disabledLogFile: true} );
         this.setState( {disabledEmail: false} );
-        this.setState( {output: 2} );
+        this.setState( {output: "2"} );
     }
 
     selectionChangedLogFile(){
         this.setState( {disabledEmail: true} );
         this.setState( {disabledLogFile: false} );
-        this.setState( {output: 1} );
+        this.setState( {output: "1"} );
     }
 
     selectionChangedMute(){
         this.setState( {disabledEmail: true} );
         this.setState( {disabledLogFile: true} );
-        this.setState( {output: -1} );
+        this.setState( {output: "-1"} );
     }
 
     handleEmailChange(event){

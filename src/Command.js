@@ -4,7 +4,7 @@ class Command extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ''
+            value: "Command to Execute!"
         };
 
         this.handleChange = this.handleChange.bind(this);

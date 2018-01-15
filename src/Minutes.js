@@ -1,10 +1,4 @@
-import React, { Component } from 'react';
-// {/*"2-minutes": "*/2 * * * *",*/}
-//     {/*"3-minutes": "*/3 * * * *",*/}
-//         {/*"4-minutes": "*/4 * * * *",*/}
-//             {/*"6-minutes": "*/6 * * * *",*/}
-//                 {/*"10-minutes": "*/10 * * * *",*/}
-//                     {/*"20-minutes": "*/20 * * * *",*/}
+import React, { Component } from "react";
 
 class Minutes extends Component {
     constructor(props) {
