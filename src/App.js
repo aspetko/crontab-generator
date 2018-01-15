@@ -27,7 +27,7 @@ class App extends Component {
             email: "",
             logfile: "",
             executionOutput: "",
-            output: -1
+            output: "-1"
         };
         this.changeMinutes = this.changeMinutes.bind(this);
         this.changeHours = this.changeHours.bind(this);
@@ -100,8 +100,8 @@ class App extends Component {
 
     changeExecutionOutput(event) {
         this.setState({
-            executionOutput: event,
-            output: -1
+            executionOutput: "2>&1",
+            output: "-1"
         });
         console.log("changeExecutionOutput ", event);
     }
@@ -109,7 +109,7 @@ class App extends Component {
     changeExecutionLogfileOutput(event) {
         this.setState({
             logfile: event,
-            output: 1
+            output: "1"
         });
         console.log("changeExecutionLogfileOutput ", event);
     }
@@ -117,7 +117,7 @@ class App extends Component {
     changeExecutionEmailOutput(event) {
         this.setState({
             email: event,
-            output: 2
+            output: "2"
         });
         console.log("changeExecutionEmailOutput ", event);
     }

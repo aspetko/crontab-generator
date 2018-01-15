@@ -54,7 +54,6 @@ class GeneratedOutput extends Component {
           changeCommand = "?";
       }
       let changeExecutionOutput = "";
-      console.log(this.props.output);
       switch(this.props.output){
           case "1":
               console.log("logfile");
@@ -65,9 +64,11 @@ class GeneratedOutput extends Component {
               console.log("email");
               break;
           case "-1":
-              changeExecutionOutput = this.props.executionOutput;
+              changeExecutionOutput = "2>&1";
               console.log("mute");
               break;
+          default:
+              console.error("There is no spoon!");
       }
       return (
           <fieldset><legend>GeneratedOutput</legend>

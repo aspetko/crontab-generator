@@ -20,6 +20,12 @@ class Output extends Component {
     selectionChangedEmail(){
         this.setState( {disabledLogFile: true} );
         this.setState( {disabledEmail: false} );
+        this.setState( {output: -1} );
+    }
+
+    selectionChangedEmail(){
+        this.setState( {disabledLogFile: true} );
+        this.setState( {disabledEmail: false} );
         this.setState( {output: 2} );
     }
 
@@ -50,7 +56,7 @@ class Output extends Component {
           <legend>Execution Output</legend>
                 <div className="col-sm-12">
                     <label>
-                        <input type="radio" name="rexecutionoutput" value="2>&1" defaultChecked onChange={this.selectionChangedMute}/> Mute the Output
+                        <input type="radio" name="rexecutionoutput" value="2>&1" onChange={this.selectionChanged} defaultChecked onChange={this.selectionChangedMute}/> Mute the Output
                     </label>
                 </div>
                 <div className="col-sm-6">
