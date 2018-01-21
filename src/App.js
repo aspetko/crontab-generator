@@ -9,7 +9,7 @@ import Months from "./Months";
 import Weekdays from "./Weekdays";
 import Events from "./Events";
 import OperatingSystem from "./OperatingSystem";
-import HumanReadable from "./HumanReadable.js";
+import WhatDoesThisMean from "./WhatDoesThisMean.js";
 
 class App extends Component {
     constructor(props){
@@ -23,7 +23,6 @@ class App extends Component {
             months: "*",
             weekdays: "*",
             command: "Command to execute!",
-            events: "",
             email: "",
             logfile: "",
             executionOutput: "",
@@ -35,7 +34,6 @@ class App extends Component {
         this.changeMonths = this.changeMonths.bind(this);
         this.changeWeekdays = this.changeWeekdays.bind(this);
         this.changeCommand = this.changeCommand.bind(this);
-        this.changeEvents = this.changeEvents.bind(this);
         this.changeExecutionOutput = this.changeExecutionOutput.bind(this);
         this.changeOperatingSystem = this.changeOperatingSystem.bind(this);
         this.changeExecutionLogfileOutput = this.changeExecutionLogfileOutput.bind(this);
@@ -91,14 +89,7 @@ class App extends Component {
         console.log("changeCommand ", event);
     }
 
-    changeEvents(event) {
-        this.setState({
-            events: event
-        });
-        console.log("changeEvents ", event);
-    }
-
-    changeExecutionOutput() {
+    changeExecutionOutput(event) {
         this.setState({
             executionOutput: "2>&1",
             output: "-1"
@@ -143,7 +134,8 @@ class App extends Component {
         <div className="row">
             <div className="col-sm-12">
                 <div className="col-sm-12">
-                    <Events onChange={this.changeEvents}/>
+                    <Events minutes={this.changeMinutes} hours={this.changeHours}  days={this.changeDays}
+                            months={this.changeMonths}  weekdays={this.changeWeekdays}/>
                 </div>
             </div>
         </div>
@@ -183,7 +175,7 @@ class App extends Component {
                              output={this.state.output} />
         </div>
         <div className="row">
-            <HumanReadable  minutes={this.state.minutes} hours={this.state.hours}
+            <WhatDoesThisMean  minutes={this.state.minutes} hours={this.state.hours}
                             days={this.state.days} months={this.state.months}
                             weekdays={this.state.weekdays} command={this.state.command}
                             events={this.state.events} email={this.state.email}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Clipboard from "react-clipboard.js";
 
 class GeneratedOutput extends Component {
     constructor(props){
@@ -62,6 +63,20 @@ class GeneratedOutput extends Component {
         } else {
             clipboardText += seperator + "Specify a useful command to execute!";
         }
+        switch(this.props.output){
+            case "1":
+                clipboardText += this.props.logfile;
+                break;
+            // case "2":
+            //     changeExecutionOutput = this.props.email;
+            //      console.log("email");
+            //     break;
+            case "-1":
+                clipboardText = "> /dev/null 2>&1";
+                break;
+            default:
+                console.error("There is no spoon!");
+        }
         return clipboardText;
     }
 
@@ -113,7 +128,7 @@ class GeneratedOutput extends Component {
               console.log("email");
               break;
           case "-1":
-              changeExecutionOutput = "2>&1";
+              changeExecutionOutput = "> /dev/null 2>&1";
               console.log("mute");
               break;
           default:
@@ -153,11 +168,13 @@ class GeneratedOutput extends Component {
                           <div>{changeCommand}</div>
                       </fieldset>
                   </div>
-                  <div className="col-sm-1">
+                  <div className="col-sm-2">
                       <fieldset><legend>Output</legend>
                           <div>{changeExecutionOutput}</div>
                       </fieldset>
                   </div>
+              </div>
+              <div className="col-sm-12">
                   <div className="col-sm-1">
                       <Clipboard option-text={this.copyToClipboard} button-title="Copy to Clipboard">
                           Copy
